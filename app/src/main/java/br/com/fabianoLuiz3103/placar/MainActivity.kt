@@ -22,9 +22,13 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(binding.root)
 
+
+        setUpExtras(savedInstanceState)
         setUpListeners()
 
     }
+
+
 
     private fun setUpListeners() {
         binding.btPlayerOneScore.setOnClickListener{
@@ -60,6 +64,24 @@ class MainActivity : AppCompatActivity() {
         playerTwoScore = 0;
         setUpScorePlayerOne()
         setUpScorePlayerTwo()
+    }
+
+
+    //Chamado antes de fazer o destroy da activity
+    //Antes de destruir recupera e armazena os valores
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt("PLAYER_ONE_SCORE", playerOneScore)
+        outState.putInt("PLAYER_TWO_SCORE", playerTwoScore)
+    }
+
+    private fun setUpExtras(savedInstanceState: Bundle?) {
+        if(savedInstanceState != null){
+            playerOneScore = savedInstanceState.getInt("PLAYER_ONE_SCORE")
+            playerTwoScore = savedInstanceState.getInt("PLAYER_TWO_SCORE")
+            setUpScorePlayerOne()
+            setUpScorePlayerTwo()
+        }
     }
 
 
